@@ -1,6 +1,6 @@
 .git
 .idea
 .vscode
+.env
 go.mod
 go.sum
-.env
