@@ -21,3 +21,6 @@ mongdb:
   username: David3410
   password: eGd1
   database: logs_db
+
+hash:
+  salt: Ajdsji1!eh2*

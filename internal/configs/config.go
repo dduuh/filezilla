@@ -21,6 +21,7 @@ const (
 	defaultMongoUser       = "David3410"
 	defaultMongoPassword   = "eGd1"
 	defaultMongoDb         = "logs_db"
+	defaultSalt            = "Ajdsji1!eh2*"
 
 	defaultAccessTtl  = 15 * time.Minute
 	defaultRefreshTtl = 24 * time.Hour * 30
@@ -34,6 +35,7 @@ type (
 		PostgresCfg PostgreSQLConfig
 		JWTCfg      JWTConfig
 		MongoCfg    MongoDBConfig
+		HashCfg     HashConfig
 	}
 
 	HTTPConfig struct {
@@ -64,6 +66,10 @@ type (
 		Username string `mapstructure:"username"`
 		Password string `mapstructure:"password"`
 		Database string `mapstructure:"database"`
+	}
+
+	HashConfig struct {
+		Salt string `mapstructure:"salt"`
 	}
 )
 
@@ -99,6 +105,7 @@ func setFromEnv(cfg *Config) {
 	cfg.MongoCfg.Username = os.Getenv("MONGO_INITDB_ROOT_USERNAME")
 	cfg.MongoCfg.Password = os.Getenv("MONGO_INITDB_ROOT_PASSWORD")
 	cfg.MongoCfg.Database = os.Getenv("MONGO_INITDB_ROOT_DB")
+	cfg.HashCfg.Salt = os.Getenv("HASH_SALT")
 }
 
 func unmarshal(cfg *Config) error {
@@ -111,6 +118,10 @@ func unmarshal(cfg *Config) error {
 	}
 
 	if err := viper.UnmarshalKey("mongodb", &cfg.MongoCfg); err != nil {
+		return err
+	}
+
+	if err := viper.UnmarshalKey("hash", &cfg.HashCfg); err != nil {
 		return err
 	}
 
@@ -151,4 +162,5 @@ func populateDefaultFiles() {
 	viper.SetDefault("mongodb.username", defaultMongoUser)
 	viper.SetDefault("mongodb.password", defaultMongoPassword)
 	viper.SetDefault("mongodb.database", defaultMongoDb)
+	viper.SetDefault("hash.salt", defaultSalt)
 }

@@ -3,9 +3,10 @@ package hash
 import (
 	"crypto/sha1"
 	"fmt"
+	"os"
 )
 
-const salt = "gopher"
+var salt = os.Getenv("HASH_SALT")
 
 func HashPassword(password string) string {
 	hash := sha1.New()
