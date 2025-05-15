@@ -28,20 +28,20 @@ type Files interface {
 	GetFiles() ([]domain.File, error)
 }
 
-type Log interface {
+type Logs interface {
 	Log(ctx context.Context, logInput *domain.Log) error
 }
 
 type Service struct {
 	Authentication
 	Files
-	Log
+	Logs
 }
 
 func NewService(repos repository.Repository) *Service {
 	return &Service{
 		Authentication: NewAuthService(repos.Authentication),
 		Files:          NewFileService(repos.Files),
-		Log:            NewLogService(repos.Logs),
+		Logs:           NewLogService(repos.Logs),
 	}
 }

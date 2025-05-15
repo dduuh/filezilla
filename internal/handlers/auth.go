@@ -35,7 +35,7 @@ func (h *Handler) signUp(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if err := h.services.Log.Log(context.TODO(), &domain.Log{
+	if err := h.services.Logs.Log(context.TODO(), &domain.Log{
 		UserId: userId,
 		Role:   domain.USER,
 		Action: domain.REGISTER,
@@ -81,9 +81,9 @@ func (h *Handler) login(w http.ResponseWriter, r *http.Request) {
 
 	cook.SetCookie(w, "refresh-token", refreshToken, "/", "", true, true, http.SameSiteLaxMode)
 
-	if err := h.services.Log.Log(context.TODO(), &domain.Log{
+	if err := h.services.Logs.Log(context.TODO(), &domain.Log{
 		UserId: userId,
-		Role: domain.USER,
+		Role:   domain.USER,
 		Action: domain.LOGIN,
 	}); err != nil {
 		logrus.Fatal(err.Error())
