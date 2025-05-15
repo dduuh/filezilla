@@ -1,0 +1,23 @@
+http:
+  port: 8082
+  maxHeaderBytes: 1
+  readTimeout: 10s
+  writeTimeout: 10s
+
+postgres_db:
+  user: postgres
+  password: Backham
+  host: localhost
+  port: 5433
+  dbname: postgres
+  sslmode: disable
+
+auth:
+  accessTtl: 15m
+  refreshTtl: 720h
+
+mongdb:
+  uri: mongodb://localhost:27017
+  username: David3410
+  password: eGd1
+  database: logs_db

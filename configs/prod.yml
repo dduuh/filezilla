@@ -1,0 +1,3 @@
+auth:
+  accessTtl: 15m
+  refreshTtl: 720h
