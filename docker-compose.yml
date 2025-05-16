@@ -1,0 +1,43 @@
+services:
+  app:
+    build: .
+    ports:
+      - "80:8082"
+    environment:
+      - HTTP_HOST=localhost
+      - HTTP_PORT=8082
+      - APP_ENV=prod
+      - DB_HOST=postgres
+      - DB_PORT=5432
+    depends_on:
+      - postgres
+      - mongodb
+      - miniodb
+
+  postgres:
+    image: postgres:latest
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=Backham
+      - POSTGRES_DB=postgres
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  mongodb:
+    image: mongo:4.4
+    ports:
+      - "27017:27017"
+
+  miniodb:
+    image: minio/minio:latest
+    environment:
+      - MINIO_ROOT_USER=davId3410
+      - MINIO_ROOT_PASSWORD=David3410
+    ports:
+      - "9000:9000"
+    command: server /data
